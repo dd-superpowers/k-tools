@@ -1,0 +1,20 @@
+services:
+  k:
+    container_name: tools
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GO_VERSION=1.24.0
+        - NODE_MAJOR=22
+        - KUBECTL_VERSION=1.31.0   
+        - HELM_VERSION=3.13.3
+        - K9S_VERSION=0.30.6
+    network_mode: "host"  # --network host
+    volumes:
+      - $HOME/.kube:/home/bob/.kube:cached
+      - ./workspace:/home/bob/workspace:cached
+    environment:
+      - KUBECONFIG=/home/bob/.kube/config
+    tty: true            #  -t
+    stdin_open: true     #  -i
